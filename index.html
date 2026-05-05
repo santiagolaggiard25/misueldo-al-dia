@@ -885,6 +885,94 @@
     .nav-links { display: none; }
     .hero-stats { gap: 1.5rem; }
   }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.78);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #0f1410;
+    border: 0.5px solid rgba(34,197,94,0.35);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 440px; width: 100%;
+    position: relative;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.28s ease;
+    box-shadow: 0 0 80px rgba(34,197,94,0.09), 0 40px 80px rgba(0,0,0,0.6);
+  }
+  .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute; top: 1.1rem; right: 1.25rem;
+    background: none; border: none;
+    color: #6b7f6b; font-size: 1.5rem;
+    cursor: pointer; line-height: 1; transition: color 0.2s;
+  }
+  .modal-close:hover { color: #f0faf0; }
+  .modal-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(34,197,94,0.06);
+    border: 0.5px solid rgba(34,197,94,0.3);
+    border-radius: 100px; padding: 0.3rem 0.85rem;
+    font-size: 0.72rem; color: #22c55e;
+    font-weight: 500; letter-spacing: 0.04em; margin-bottom: 1.25rem;
+  }
+  .modal-badge::before {
+    content: ''; width: 5px; height: 5px;
+    border-radius: 50%; background: #22c55e;
+  }
+  .modal h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.65rem; letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 0.6rem; color: #f0faf0;
+  }
+  .modal h2 span { color: #22c55e; }
+  .modal-desc { font-size: 0.875rem; color: #9ab09a; margin-bottom: 2rem; line-height: 1.6; }
+  .modal-form { display: flex; flex-direction: column; gap: 0.85rem; }
+  .modal-input {
+    background: #141a14;
+    border: 0.5px solid rgba(34,197,94,0.2);
+    border-radius: 10px; padding: 0.85rem 1rem;
+    font-size: 0.9rem; color: #f0faf0;
+    font-family: 'DM Sans', sans-serif;
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .modal-input::placeholder { color: #6b7f6b; }
+  .modal-input:focus { border-color: rgba(34,197,94,0.55); }
+  .modal-submit {
+    background: #22c55e; color: #0a0d0a;
+    border: none; border-radius: 10px; padding: 0.95rem;
+    font-size: 0.95rem; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.2s; width: 100%; margin-top: 0.25rem;
+  }
+  .modal-submit:hover { background: #4ade80; transform: translateY(-1px); }
+  .modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .modal-fine { font-size: 0.72rem; color: #6b7f6b; text-align: center; margin-top: 0.85rem; }
+  .modal-success { display: none; text-align: center; padding: 1rem 0; }
+  .modal-success.show { display: block; }
+  .modal-form.hide { display: none; }
+  .success-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: rgba(34,197,94,0.12);
+    border: 0.5px solid rgba(34,197,94,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin: 0 auto 1.25rem;
+  }
+  .success-title {
+    font-family: 'Syne', sans-serif; font-size: 1.45rem;
+    font-weight: 800; color: #f0faf0; margin-bottom: 0.5rem;
+  }
+  .success-desc { font-size: 0.875rem; color: #9ab09a; line-height: 1.6; }
+
 </style>
 </head>
 <body>
@@ -896,7 +984,7 @@
     <li><a href="#funciones">Funciones</a></li>
     <li><a href="#testimonios">Testimonios</a></li>
     <li><a href="#precios">Precios</a></li>
-    <li><a href="#precios" class="nav-cta">Empezar gratis</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal('free');return false;">Empezar gratis</a></li>
   </ul>
 </nav>
 
@@ -911,7 +999,7 @@
   <p>La plataforma que te ayuda a organizar tus gastos, pagar tus deudas y llegar a fin de mes — sin ser experto en finanzas.</p>
 
   <div class="hero-ctas">
-    <a href="#precios" class="btn-primary">Empezar gratis →</a>
+    <a href="#" class="btn-primary" onclick="openModal('free');return false;">Empezar gratis →</a>
     <a href="#funciones" class="btn-ghost">Ver cómo funciona</a>
   </div>
 
@@ -1187,7 +1275,7 @@
         <li class="no">Plan de ahorro por metas</li>
         <li class="no">Consejero IA</li>
       </ul>
-      <a href="#" class="btn-full outline">Empezar gratis</a>
+      <a href="#" class="btn-full outline" onclick="openModal('free');return false;">Empezar gratis</a>
     </div>
     <div class="pricing-card pro">
       <div class="pricing-badge">MÁS ELEGIDO</div>
@@ -1205,7 +1293,7 @@
         <li>Resumen anual completo</li>
         <li>Soporte prioritario</li>
       </ul>
-      <a href="#" class="btn-full primary">Acceder al PRO →</a>
+      <a href="#" class="btn-full primary" onclick="openModal('pro');return false;">Acceder al PRO →</a>
     </div>
   </div>
 </section>
@@ -1245,7 +1333,7 @@
 <section class="final-cta">
   <h2>El mejor momento para<br>organizarte fue ayer.<br>El segundo mejor es <span style="color:var(--green)">hoy.</span></h2>
   <p>Gratis para empezar. Sin tarjeta. Sin excusas.</p>
-  <a href="#precios" class="btn-primary" style="font-size:1rem;padding:1rem 2.5rem;">Empezar gratis ahora →</a>
+  <a href="#" class="btn-primary" style="font-size:1rem;padding:1rem 2.5rem;" onclick="openModal('free');return false;">Empezar gratis ahora →</a>
 </section>
 
 <!-- FOOTER -->
@@ -1316,6 +1404,101 @@
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     observer.observe(el);
   });
+</script>
+
+
+<!-- MODAL WAITLIST -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-badge" id="modalBadge">Plan Gratuito</div>
+    <h2 id="modalTitle">Empezá a <span>organizarte</span> hoy</h2>
+    <p class="modal-desc" id="modalDesc">Dejanos tu nombre y email y te avisamos cuando tu cuenta este lista. Sin tarjeta requerida.</p>
+    <form class="modal-form" id="modalForm" onsubmit="handleSubmit(event)">
+      <input class="modal-input" type="text" name="nombre" placeholder="Tu nombre" required>
+      <input class="modal-input" type="email" name="email" placeholder="Tu email" required>
+      <input type="hidden" name="plan" id="planHidden" value="free">
+      <button type="submit" class="modal-submit" id="modalSubmitBtn">Anotarme en la lista &rarr;</button>
+    </form>
+    <div class="modal-fine">Sin spam. Te escribimos solo cuando haya novedades.</div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">&#10003;</div>
+      <div class="success-title">&#161;Listo, estas anotado!</div>
+      <p class="success-desc">Te avisamos en cuanto este disponible.<br>Mientras tanto, contales a tus amigos.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(plan) {
+    const overlay = document.getElementById('modalOverlay');
+    const badge = document.getElementById('modalBadge');
+    const title = document.getElementById('modalTitle');
+    const desc = document.getElementById('modalDesc');
+    const planHidden = document.getElementById('planHidden');
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    const form = document.getElementById('modalForm');
+    const success = document.getElementById('modalSuccess');
+
+    form.classList.remove('hide');
+    success.classList.remove('show');
+    submitBtn.disabled = false;
+
+    if (plan === 'pro') {
+      badge.textContent = 'Plan PRO';
+      title.innerHTML = 'Accede al <span>PRO</span> antes que todos';
+      desc.textContent = 'Anotate y conseguis 3 meses de PRO con 50% de descuento al lanzamiento.';
+      submitBtn.textContent = 'Quiero el descuento PRO';
+    } else {
+      badge.textContent = 'Plan Gratuito';
+      title.innerHTML = 'Empeza a <span>organizarte</span> hoy';
+      desc.textContent = 'Dejanos tu nombre y email y te avisamos cuando tu cuenta este lista. Sin tarjeta requerida.';
+      submitBtn.textContent = 'Anotarme en la lista';
+    }
+
+    planHidden.value = plan;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('modalSubmitBtn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    const data = {
+      nombre: form.nombre.value,
+      email: form.email.value,
+      plan: form.plan.value,
+      fecha: new Date().toISOString()
+    };
+
+    try {
+      const leads = JSON.parse(localStorage.getItem('msad_leads') || '[]');
+      leads.push(data);
+      localStorage.setItem('msad_leads', JSON.stringify(leads));
+    } catch(err) {}
+
+    await new Promise(r => setTimeout(r, 800));
+
+    form.classList.add('hide');
+    document.getElementById('modalSuccess').classList.add('show');
+  }
 </script>
 
 </body>
