@@ -1431,6 +1431,13 @@
 
 <script>
   function openModal(plan) {
+    // PRO: redirigir directo a Mercado Pago
+    if (plan === 'pro') {
+      window.open('https://mpago.la/2K3PRS2', '_blank');
+      return;
+    }
+
+    // GRATUITO: mostrar modal de waitlist
     const overlay = document.getElementById('modalOverlay');
     const badge = document.getElementById('modalBadge');
     const title = document.getElementById('modalTitle');
@@ -1444,19 +1451,12 @@
     success.classList.remove('show');
     submitBtn.disabled = false;
 
-    if (plan === 'pro') {
-      badge.textContent = 'Plan PRO';
-      title.innerHTML = 'Accede al <span>PRO</span> antes que todos';
-      desc.textContent = 'Anotate y conseguis 3 meses de PRO con 50% de descuento al lanzamiento.';
-      submitBtn.textContent = 'Quiero el descuento PRO';
-    } else {
-      badge.textContent = 'Plan Gratuito';
-      title.innerHTML = 'Empeza a <span>organizarte</span> hoy';
-      desc.textContent = 'Dejanos tu nombre y email y te avisamos cuando tu cuenta este lista. Sin tarjeta requerida.';
-      submitBtn.textContent = 'Anotarme en la lista';
-    }
+    badge.textContent = 'Plan Gratuito';
+    title.innerHTML = 'Empeza a <span>organizarte</span> hoy';
+    desc.textContent = 'Dejanos tu nombre y email y te avisamos cuando tu cuenta este lista. Sin tarjeta requerida.';
+    submitBtn.textContent = 'Anotarme en la lista';
+    planHidden.value = 'free';
 
-    planHidden.value = plan;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
